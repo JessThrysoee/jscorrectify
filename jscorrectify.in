@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# jscorrectify - jshint[1], jslint[2], and jsbeautifier[3] command-line interfaces.
+#
+# [1]: http://jshint.com
+# [2]: http://jslint.com
+# [3]: http://jsbeautifier.org
+# 
+# Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
+# Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+#
+
+DATAROOTDIR=@datarootdir@
+
+NAME=`basename $0`
+
+if test "$1" = "--help" -o "$#" -ne 2; then
+   # check if local and official remote scripts differ
+   echo "usage: $NAME --diff     <jshint|jslint|jsbeautify>"
+   # upgrade to newest remote scripts
+   echo "       $NAME --upgrade  <jshint|jslint|jsbeautify>"
+   echo "       $NAME --help"
+   exit
+fi
+
+if test "$1" = "--diff"; then
+   OPT="DIFF"
+elif test "$1" = "--upgrade"; then
+   OPT="UPGRADE"
+elif test "$1" = "--init"; then
+   OPT="INIT"
+else
+   echo "$NAME: invalid option: '$1'"
+   echo "Try '$NAME --help' for more information."
+   exit 1
+fi
+
+if test "$2" = "jshint"; then
+   URL="http://jshint.com"
+   URL="https://github.com/jshint/jshint/raw/master"
+   FILES="jshint.js"
+elif test "$2" = "jslint"; then
+   URL="http://www.jslint.com"
+   URL="https://github.com/douglascrockford/JSLint/raw/master"
+   FILES="fulljslint.js"
+elif test "$2" = "jsbeautify"; then
+   URL="https://github.com/einars/js-beautify/raw/master"
+   FILES="beautify.js attic/beautify-cl/beautify-cl.js beautify-html.js"
+else
+   echo "$NAME: invalid option: '$2'"
+   echo "Try '$NAME --help' for more information."
+   exit 1
+fi
+
+
+if test "$OPT" = "INIT"; then
+   TMPDIR=.
+else
+   TMPDIR=`mktemp -d -t ${NAME}.XXXX`
+   cd $TMPDIR
+   trap 'cd /; rm -rf $TMPDIR' 1 2 13 15 0
+fi
+
+for js in $FILES; do
+   curl -s -o "${TMPDIR}/`basename $js`" "${URL}/$js"
+   if test $? -ne 0; then
+      echo "$NAME: Failed to 'curl ${URL}/$js' -- exiting"
+      exit 1
+   fi
+done
+
+
+if test "$OPT" = "INIT"; then
+   exit 0
+elif test "$OPT" = "DIFF"; then
+   for js in $FILES; do
+      diff -Naur "${DATAROOTDIR}/$js" "$TMPDIR"
+   done
+elif test "$OPT" = "UPGRADE"; then
+   for js in $FILES; do
+      cp -f "$TMPDIR/$js" ${DATAROOTDIR}
+   done
+else
+   echo "$NAME: OPT: $OPT -- exiting"
+   exit 1
+fi
+

@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# jscorrectify - jslint[1] and jsbeautifier[2] command-line interfaces.
+#
+# [1]: http://jslint.com
+# [2]: http://jsbeautifier.org
+# 
+# Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
+# Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+#
+
+DATAROOTDIR=@datarootdir@
+
+if test "$1" = "--help"
+then
+   echo "usage: `basename $0` FILE"
+   echo "       `basename $0` URL"
+   echo "       `basename $0` < FILE"
+   echo "       echo 'JAVASCRIPT_SNIPPET' | `basename $0`"
+   exit
+fi
+
+if test -n "$1"
+then
+   JAVASCRIPT="$1"
+fi
+
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main ${DATAROOTDIR}/beautify-cl.js -d ${DATAROOTDIR} -i 3 -n -p -a "$JAVASCRIPT"
+
