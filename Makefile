@@ -1,13 +1,14 @@
+#!/bin/sh
 #
-# jscorrectify - jslint[1] and jsbeautifier[2] command-line interfaces.
+# jscorrectify - jshint[1], jslint[2], and jsbeautifier[3] command-line interfaces.
 #
-# [1]: http://jslint.com
-# [2]: http://jsbeautifier.org
-#
+# [1]: http://jshint.com
+# [2]: http://jslint.com
+# [3]: http://jsbeautifier.org
+# 
 # Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
 # Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 #
-
 
 PREFIX=/usr/local
 # install dir for executables (should be on PATH)

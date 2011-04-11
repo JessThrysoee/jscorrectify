@@ -1,8 +1,9 @@
 /*!
- * jscorrectify - jslint[1] and jsbeautifier[2] command-line interfaces.
+ * jscorrectify - jshint[1], jslint[2], and jsbeautifier[3] command-line interfaces.
  *
- * [1]: http://jslint.com
- * [2]: http://jsbeautifier.org
+ * [1]: http://jshint.com
+ * [2]: http://jslint.com
+ * [3]: http://jsbeautifier.org
  * 
  * Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -10,7 +11,6 @@
  * This is the Rhino companion to fulljslint.js, originally based on
  * Douglas Crockford's rhino.js
  */
-
 
 /*global JSHINT, importPackage, BufferedReader, InputStreamReader, System, java */
 /*jslint rhino: true */
