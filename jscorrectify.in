@@ -74,11 +74,11 @@ if test "$OPT" = "INIT"; then
    exit 0
 elif test "$OPT" = "DIFF"; then
    for js in $FILES; do
-      diff -Naur "${DATAROOTDIR}/$js" "$TMPDIR"
+      diff -Naur "${DATAROOTDIR}/`basename $js`" "$TMPDIR"
    done
 elif test "$OPT" = "UPGRADE"; then
    for js in $FILES; do
-      cp -f "$TMPDIR/$js" ${DATAROOTDIR}
+      cp -f "$TMPDIR/`basename $js`" ${DATAROOTDIR}
    done
 else
    echo "$NAME: OPT: $OPT -- exiting"
