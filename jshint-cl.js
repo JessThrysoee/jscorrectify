@@ -8,7 +8,7 @@
  * Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
  * 
- * This is the Rhino companion to fulljslint.js, originally based on
+ * This is the Rhino companion to jslint.js, originally based on
  * Douglas Crockford's rhino.js
  */
 

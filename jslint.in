@@ -26,5 +26,5 @@ then
    JAVASCRIPT="$1"
 fi
 
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/fulljslint.js ${DATAROOTDIR}/jslint-cl.js "$JAVASCRIPT"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/jslint.js ${DATAROOTDIR}/jslint-cl.js "$JAVASCRIPT"
 

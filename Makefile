@@ -21,7 +21,7 @@ NAME=jscorrectify-1.0
 
 
 JSHINT=jshint.js
-JSLINT=fulljslint.js
+JSLINT=jslint.js
 JSBEAUTIFY=beautify.js beautify-cl.js beautify-html.js
 RHINO=js.jar
 GENERATED=jshint jslint jsbeautify jscorrectify
