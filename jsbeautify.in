@@ -14,17 +14,11 @@ DATAROOTDIR=@datarootdir@
 
 if test "$1" = "--help"
 then
-   echo "usage: `basename $0` FILE"
-   echo "       `basename $0` URL"
-   echo "       `basename $0` < FILE"
-   echo "       echo 'JAVASCRIPT_SNIPPET' | `basename $0`"
+   echo "usage: jsbeautify [opt1=val1,opt2=val2...] FILE"
    exit
 fi
 
-if test -n "$1"
-then
-   JAVASCRIPT="$1"
-fi
+OPTIONS_OR_FILE="$1"
+FILE="$2"
 
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main ${DATAROOTDIR}/beautify-cl.js -d ${DATAROOTDIR} -i 3 -n -p -a "$JAVASCRIPT"
-
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/beautify.js ${DATAROOTDIR}/beautify-cl.js "$OPTIONS_OR_FILE" "$FILE"

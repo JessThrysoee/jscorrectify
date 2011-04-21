@@ -20,9 +20,12 @@ DATAROOTDIR=$(PREFIX)/share/jscorrectify
 NAME=jscorrectify-1.0
 
 
+LINT_CL=lint-cl.js
+JSBEAUTIFY_CL=beautify-cl.js
+
 JSHINT=jshint.js
 JSLINT=jslint.js
-JSBEAUTIFY=beautify.js beautify-cl.js beautify-html.js
+JSBEAUTIFY=beautify.js
 RHINO=js.jar
 GENERATED=jshint jslint jsbeautify jscorrectify
 
@@ -55,9 +58,9 @@ jsbeautify jscorrectify:
 
 
 
-install: all lint-cl.js
+install: all $(LINT_CL) $(JSBEAUTIFY_CL)
 	mkdir -p $(DATAROOTDIR)
-	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) lint-cl.js $(DATAROOTDIR)
+	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(DATAROOTDIR)
 	mkdir -p $(BINDIR)
 	cp -f $(GENERATED) $(BINDIR)
 	cd $(BINDIR) && chmod +x $(GENERATED)
@@ -65,7 +68,7 @@ install: all lint-cl.js
 
 
 uninstall:
-	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) lint-cl.js
+	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL)
 	-rmdir $(DATAROOTDIR)
 	rm -f $(BINDIR)/jslint
 	rm -f $(BINDIR)/jsbeautify
@@ -83,11 +86,12 @@ distclean:
 
 dist:
 	mkdir -p dist/$(NAME)
-	cp jsbeautify.in   dist/$(NAME)
-	cp jscorrectify.in dist/$(NAME)
-	cp lint.in         dist/$(NAME)
-	cp lint-cl.js      dist/$(NAME)
-	cp Makefile        dist/$(NAME)
+	cp jsbeautify.in    dist/$(NAME)
+	cp jscorrectify.in  dist/$(NAME)
+	cp lint.in          dist/$(NAME)
+	cp $(LINT_CL)       dist/$(NAME)
+	cp $(JSBEAUTIFY_CL) dist/$(NAME)
+	cp Makefile         dist/$(NAME)
 	cd dist && tar zcvf ../$(NAME).tar.gz $(NAME)
 	rm -r dist
 

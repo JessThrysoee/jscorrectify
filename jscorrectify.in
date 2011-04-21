@@ -45,7 +45,7 @@ elif test "$2" = "jslint"; then
    FILES="jslint.js"
 elif test "$2" = "jsbeautify"; then
    URL="https://github.com/einars/js-beautify/raw/master"
-   FILES="beautify.js attic/beautify-cl/beautify-cl.js beautify-html.js"
+   FILES="beautify.js"
 else
    echo "$NAME: invalid option: '$2'"
    echo "Try '$NAME --help' for more information."
@@ -62,7 +62,7 @@ else
 fi
 
 for js in $FILES; do
-   curl -s -o "${TMPDIR}/`basename $js`" "${URL}/$js"
+   curl -s -o "${TMPDIR}/$js" "${URL}/$js"
    if test $? -ne 0; then
       echo "$NAME: Failed to 'curl ${URL}/$js' -- exiting"
       exit 1
@@ -74,11 +74,11 @@ if test "$OPT" = "INIT"; then
    exit 0
 elif test "$OPT" = "DIFF"; then
    for js in $FILES; do
-      diff -Naur "${DATAROOTDIR}/`basename $js`" "$TMPDIR"
+      diff -Naur "${DATAROOTDIR}/$js" "$TMPDIR"
    done
 elif test "$OPT" = "UPGRADE"; then
    for js in $FILES; do
-      cp -f "$TMPDIR/`basename $js`" ${DATAROOTDIR}
+      cp -f "$TMPDIR/$js" ${DATAROOTDIR}
    done
 else
    echo "$NAME: OPT: $OPT -- exiting"
