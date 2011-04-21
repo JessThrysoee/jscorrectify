@@ -1,6 +1,5 @@
 # jscorrectify
 
-
 Makes the github HEAD of [jshint](http://github.com/jshint/jshint), [jslint](http://github.com/douglascrockford/JSLint), and [jsbeautify](http://github.com/einars/js-beautify) available as command-line commands.
 
 Once installed, `jscorrectify` makes it easy to `--upgrade` to the current HEAD of the respective scripts and `--diff` any changes since the last upgrade.
