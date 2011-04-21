@@ -1,11 +1,11 @@
 # jscorrectify
 
 
-Makes the github HEAD of [jshint](https://github.com/jshint/jshint/), [jslint](https://github.com/douglascrockford/JSLint), and [jsbeautify](https://github.com/einars/js-beautify) available as command-line commands.
+Makes the github HEAD of [jshint](jshint/jshint), [jslint](douglascrockford/JSLint), and [jsbeautify](einars/js-beautify) available as command-line commands.
 
 Once installed, `jscorrectify` makes it easy to `--upgrade` to the current HEAD of the respective scripts and `--diff` any changes since the last upgrade.
 
-Lint errors are compatible with [vim](vim.org)'s errorformat, so they can be shown and navigated in a quickfix window.
+Lint errors are compatible with [vim](http://www.vim.org)'s errorformat, so they can be shown and navigated in a quickfix window.
 
 
 System requirements: java and curl.
