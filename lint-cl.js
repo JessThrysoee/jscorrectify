@@ -4,46 +4,51 @@
  * [1]: http://jshint.com
  * [2]: http://jslint.com
  * [3]: http://jsbeautifier.org
- * 
+ *
  * Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
- * 
+ *
  * This is the Rhino companion to jslint.js, originally based on
  * Douglas Crockford's rhino.js
  */
 
-/*jslint rhino: true */
+/*jslint rhino:true */
 
 (function (global, args) {
-    var LINT,
-        lint   = args[0], // jshint or jslint
-        file   = args[1],
-        optstr = args[2], // arg1=val1,arg2=val2,...
-        opts   = {},
-        input;
+   var lint, file, input, optstr, opts = {};
 
-    if (!file) {
-        print('usage: lint-cl.js <jshint|jslint> FILE.js [arg1=val1,arg2=val2...]');
-        quit(1);
-    }
+   lint = args[0]; // jshint or jslint
+   if (args[2]) {
+      optstr = args[1]; // arg1=val1,arg2=val2,...
+      file = args[2];
+   } else {
+      file = args[1];
+   }
 
-    if (optstr) {
-        optstr.split(',').forEach(function (arg) {
-            var o = arg.split('=');
-            opts[o[0]] = (function (ov) {
-                switch (ov) {
-                case 'true':
-                    return true;
-                case 'false':
-                    return false;
-                default:
-                    return ov;
-                }
-            })(o[1]);
-        });
-    }
+   if (!file) {
+      //print('usage: lint-cl.js <jshint|jslint> [arg1=val1,arg2=val2...] FILE.js');
+      print('usage: ' + lint + ' [arg1=val1,arg2=val2...] FILE.js');
+      quit(1);
+   }
 
-    input = readFile(file);
+   if (optstr) {
+      optstr.split(',').forEach(function (arg) {
+         var o = arg.split('=');
+         opts[o[0]] = (function (ov) {
+            if (ov === 'true') {
+               return true;
+            } else if (ov === 'false') {
+               return false;
+            } else if (!isNaN(ov - 0)) {
+               return +ov; // Number
+            } else {
+               return ov;
+            }
+         }(o[1]));
+      });
+   }
+
+   input = readFile(file);
 
    if (!input) {
       print(lint + ': couldn\'t open file ' + file);
@@ -89,55 +94,60 @@
       }
    }
 
-   LINT = global[lint.toUpperCase()];
+   // main
+   (function () {
+      var LINT, i, e, f, data;
 
-   if (!LINT(input, opts)) {
-      for (i = 0; i < LINT.errors.length; i += 1) {
-         e = LINT.errors[i];
-         if (e) {
-            print(lint + ':' + file + ':' + e.line + ':' + e.character + ': ' + e.reason);
-            print((e.evidence || '').replace(/^\s*(\S*(\s+\S+)*)\s*$/, '$1'));
-            print('');
-         }
-      }
-      quit(2);
+      LINT = global[lint.toUpperCase()];
 
-   } else {
-      print(lint + ': No problems found' + (file ? (' in ' + file) : '') + '.');
-      print('');
-
-      data = LINT.data();
-      if (data) {
-         if (data.errors) {
-            throw 'unexpected errors';
-         }
-         if (data.functions) {
-            for (i = 0; i < data.functions.length; i += 1) {
-               f = data.functions[i];
-               printFunction(f, '{');
-
-               printArray('   closure', f.closure);
-               printArray('   var', f['var']);
-               printArray('   exception', f.exception);
-               printArray('   outer', f.outer);
-               printArray('   unused', f.unused);
-               printArray('   global', f.global);
-               printArray('   label', f.label);
-               print('}');
+      if (!LINT(input, opts)) {
+         for (i = 0; i < LINT.errors.length; i += 1) {
+            e = LINT.errors[i];
+            if (e) {
+               print(lint + ':' + file + ':' + e.line + ':' + e.character + ': ' + e.reason);
+               print((e.evidence || '').replace(/^\s*(\S*(\s+\S+)*)\s*$/, '$1'));
+               print('');
             }
          }
-         printArray('globals', data.globals);
-         printMember('members', data.member);
+         quit(2);
 
-         printNameLine('unuseds', data.unuseds);
-         printNameLine('implieds', data.implieds);
+      } else {
+         print(lint + ': No problems found' + (file ? (' in ' + file) : '') + '.');
+         print('');
 
-         printArray('urls', data.urls);
-         if (data.json) {
-            print('json: ' + data.json);
+         data = LINT.data();
+         if (data) {
+            if (data.errors) {
+               throw 'unexpected errors';
+            }
+            if (data.functions) {
+               for (i = 0; i < data.functions.length; i += 1) {
+                  f = data.functions[i];
+                  printFunction(f, '{');
+
+                  printArray('   closure', f.closure);
+                  printArray('   var', f['var']);
+                  printArray('   exception', f.exception);
+                  printArray('   outer', f.outer);
+                  printArray('   unused', f.unused);
+                  printArray('   global', f.global);
+                  printArray('   label', f.label);
+                  print('}');
+               }
+            }
+            printArray('globals', data.globals);
+            printMember('members', data.member);
+
+            printNameLine('unuseds', data.unuseds);
+            printNameLine('implieds', data.implieds);
+
+            printArray('urls', data.urls);
+            if (data.json) {
+               print('json: ' + data.json);
+            }
+
          }
-
       }
-   }
+   }());
 
 }(this, arguments));

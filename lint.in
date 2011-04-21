@@ -15,7 +15,7 @@ LINT=@lint@
 
 if test "$1" = "--help"
 then
-   echo "usage: $LINT FILE [opt1=val1,opt2=val2...]"
+   echo "usage: $LINT [opt1=val1,opt2=val2...] FILE"
    exit
 fi
 

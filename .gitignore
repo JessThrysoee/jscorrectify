@@ -1,6 +1,6 @@
 index.html
-jscorrectify-1.0.tar.gz
-fulljslint.js
+jscorrectify-*.tar.gz
+jslint.js
 beautify.js
 beautify-cl.js
 beautify-html.js
