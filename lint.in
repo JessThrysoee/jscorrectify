@@ -11,20 +11,16 @@
 #
 
 DATAROOTDIR=@datarootdir@
+LINT=@lint@
 
 if test "$1" = "--help"
 then
-   echo "usage: `basename $0` FILE"
-   echo "       `basename $0` URL"
-   echo "       `basename $0` < FILE"
-   echo "       echo 'JAVASCRIPT_SNIPPET' | `basename $0`"
+   echo "usage: $LINT FILE [opt1=val1,opt2=val2...]"
    exit
 fi
 
-if test -n "$1"
-then
-   JAVASCRIPT="$1"
-fi
+FILE="$1"
+OPTIONS="$2"
 
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/jslint.js ${DATAROOTDIR}/jslint-cl.js "$JAVASCRIPT"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/${LINT}.js ${DATAROOTDIR}/lint-cl.js "$LINT" "$FILE" "$OPTIONS"
 

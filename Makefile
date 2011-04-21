@@ -45,14 +45,19 @@ $(RHINO):
 	curl -O ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino1_7R2.zip
 	unzip -jo rhino1_7R2.zip rhino1_7R2/js.jar
 
-$(GENERATED):
+
+jshint:
+	sed -e '1,$$s;@datarootdir@;$(DATAROOTDIR);g' -e '1,$$s;@lint@;jshint;g' lint.in > $@
+jslint:
+	sed -e '1,$$s;@datarootdir@;$(DATAROOTDIR);g' -e '1,$$s;@lint@;jslint;g' lint.in > $@
+jsbeautify jscorrectify:
 	sed '1,$$s;@datarootdir@;$(DATAROOTDIR);g' $@.in > $@
 
 
 
-install: all jshint-cl.js jslint-cl.js
+install: all lint-cl.js
 	mkdir -p $(DATAROOTDIR)
-	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) jshint-cl.js jslint-cl.js $(DATAROOTDIR)
+	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) lint-cl.js $(DATAROOTDIR)
 	mkdir -p $(BINDIR)
 	cp -f $(GENERATED) $(BINDIR)
 	cd $(BINDIR) && chmod +x $(GENERATED)
@@ -60,7 +65,7 @@ install: all jshint-cl.js jslint-cl.js
 
 
 uninstall:
-	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) jshint-cl.js jslint-cl.js
+	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) lint-cl.js
 	-rmdir $(DATAROOTDIR)
 	rm -f $(BINDIR)/jslint
 	rm -f $(BINDIR)/jsbeautify
@@ -80,10 +85,8 @@ dist:
 	mkdir -p dist/$(NAME)
 	cp jsbeautify.in   dist/$(NAME)
 	cp jscorrectify.in dist/$(NAME)
-	cp jshint.in       dist/$(NAME)
-	cp jslint.in       dist/$(NAME)
-	cp jshint-cl.js    dist/$(NAME)
-	cp jslint-cl.js    dist/$(NAME)
+	cp lint.in         dist/$(NAME)
+	cp lint-cl.js      dist/$(NAME)
 	cp Makefile        dist/$(NAME)
 	cd dist && tar zcvf ../$(NAME).tar.gz $(NAME)
 	rm -r dist

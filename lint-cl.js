@@ -12,52 +12,43 @@
  * Douglas Crockford's rhino.js
  */
 
-/*global JSHINT, importPackage, BufferedReader, InputStreamReader, System, java */
 /*jslint rhino: true */
 
+(function (global, args) {
+    var LINT,
+        lint   = args[0], // jshint or jslint
+        file   = args[1],
+        optstr = args[2], // arg1=val1,arg2=val2,...
+        opts   = {},
+        input;
 
-(function (a) {
-   var e, i, input, file, stdin, lines, options, f, data;
+    if (!file) {
+        print('usage: lint-cl.js <jshint|jslint> FILE.js [arg1=val1,arg2=val2...]');
+        quit(1);
+    }
 
-   input = '';
-   file = a[0] || '';
+    if (optstr) {
+        optstr.split(',').forEach(function (arg) {
+            var o = arg.split('=');
+            opts[o[0]] = (function (ov) {
+                switch (ov) {
+                case 'true':
+                    return true;
+                case 'false':
+                    return false;
+                default:
+                    return ov;
+                }
+            })(o[1]);
+        });
+    }
 
-   if (file) {
-      // file or URL
-      if (file.match(/^https?/)) {
-         input = readUrl(file);
-         print(input);
-      } else {
-         input = readFile(file);
-      }
-      if (!input) {
-         print("jshint: Couldn't read '" + file + "'.");
-         quit(1);
-      }
-   } else {
-      // filter stdin
-      importPackage(java.io);
-      importPackage(java.lang);
-      stdin = new BufferedReader(new InputStreamReader(System['in']));
-      lines = [];
-
-      while (stdin.ready()) {
-         lines.push(stdin.readLine());
-      }
-      if (lines.length) {
-         input = lines.join("\n");
-      }
-   }
-   input = input.replace(/^\s+/, '');
+    input = readFile(file);
 
    if (!input) {
-      print("usage: jshint.js FILE");
-      print("       jshint.js URL");
-      print("       jshint.js < FILE");
-      print("       echo 'SCRIPT' | jshint.js");
+      print(lint + ': couldn\'t open file ' + file);
       quit(1);
    }
-
 
    function printFunction(f, postfix) {
       var str;
@@ -98,38 +89,27 @@
       }
    }
 
-   options = {
-      bitwise: true,
-      eqeqeq: true,
-      immed: true,
-      newcap: true,
-      nomen: true,
-      onevar: true,
-      regexp: true,
-      undef: true,
-      white: true,
-      browser: true,
-      indent: 3
-   };
+   LINT = global[lint.toUpperCase()];
 
-   if (!JSHINT(input, options)) {
-      for (i = 0; i < JSHINT.errors.length; i += 1) {
-         e = JSHINT.errors[i];
+   if (!LINT(input, opts)) {
+      for (i = 0; i < LINT.errors.length; i += 1) {
+         e = LINT.errors[i];
          if (e) {
-            print('jshint:' + file + ':' + e.line + ':' + e.character + ': ' + e.reason);
-            print((e.evidence || '').replace(/^\s*(\S*(\s+\S+)*)\s*$/, "$1"));
+            print(lint + ':' + file + ':' + e.line + ':' + e.character + ': ' + e.reason);
+            print((e.evidence || '').replace(/^\s*(\S*(\s+\S+)*)\s*$/, '$1'));
             print('');
          }
       }
       quit(2);
 
    } else {
-      print("jshint: No problems found" + (file ? (' in ' + file) : '') + '.');
+      print(lint + ': No problems found' + (file ? (' in ' + file) : '') + '.');
+      print('');
 
-      data = JSHINT.data();
+      data = LINT.data();
       if (data) {
          if (data.errors) {
-            throw "unexpected errors";
+            throw 'unexpected errors';
          }
          if (data.functions) {
             for (i = 0; i < data.functions.length; i += 1) {
@@ -160,4 +140,4 @@
       }
    }
 
-}(arguments));
+}(this, arguments));
