@@ -15,12 +15,9 @@ LINT=@lint@
 
 if test "$1" = "--help"
 then
-   echo "usage: $LINT [opt1=val1,opt2=val2...] FILE"
+   echo "usage: $LINT [-o opt1=val1,opt2=val2...] [FILE]"
    exit
 fi
 
-OPTIONS_OR_FILE="$1"
-FILE="$2"
-
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/${LINT}.js ${DATAROOTDIR}/lint-cl.js "$LINT" "$OPTIONS_OR_FILE" "$FILE"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/${LINT}.js ${DATAROOTDIR}/lint-cl.js "$LINT" "$@"
 

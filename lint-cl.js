@@ -17,18 +17,43 @@
 (function (global, args) {
    var lint, file, input, optstr, opts = {};
 
-   lint = args[0]; // jshint or jslint
-   if (args[2]) {
-      optstr = args[1]; // arg1=val1,arg2=val2,...
-      file = args[2];
-   } else {
-      file = args[1];
-   }
+   lint = args.shift(); // jshint or jslint
 
-   if (!file) {
-      //print('usage: lint-cl.js <jshint|jslint> [arg1=val1,arg2=val2...] FILE.js');
-      print('usage: ' + lint + ' [arg1=val1,arg2=val2...] FILE.js');
-      quit(1);
+   (function () {
+      var i, l;
+      for (i = 0, l = args.length; i < l; i++) {
+         if (args[i] === '-o') {
+            if (i + 1 < l) {
+               optstr = args[++i]; // arg1=val1,arg2=val2,...
+            }
+         } else if (i + 1 === l) {
+            file = args[i];
+         } else {
+            print('jsbeautify: error passing args');
+            quit(1);
+         }
+      }
+   }());
+
+   function readStdin() {
+      var stdin, lines, input;
+      importPackage(java.io);
+      importPackage(java.lang);
+      stdin = new BufferedReader(new InputStreamReader(System['in']));
+      lines = [];
+
+      while (stdin.ready()) {
+         lines.push(stdin.readLine());
+      }
+      if (lines.length) {
+         input = lines.join("\n");
+      }
+      if (!lines.length) {
+         print('jsbeautify: error reading stdin');
+         quit(1);
+      }
+      input = input.replace(/^\s+/, '');
+      return input;
    }
 
    if (optstr) {
@@ -48,10 +73,14 @@
       });
    }
 
-   input = readFile(file);
+   if (file) {
+      input = readFile(file);
+   } else {
+      input = readStdin();
+   }
 
    if (!input) {
-      print(lint + ': couldn\'t open file ' + file);
+      print('usage: ' + lint + ' [-o arg1=val1,arg2=val2...] [FILE.js]');
       quit(1);
    }
 

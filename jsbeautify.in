@@ -14,11 +14,8 @@ DATAROOTDIR=@datarootdir@
 
 if test "$1" = "--help"
 then
-   echo "usage: jsbeautify [opt1=val1,opt2=val2...] FILE"
+   echo "usage: jsbeautify [-o opt1=val1,opt2=val2...] [FILE]"
    exit
 fi
 
-OPTIONS_OR_FILE="$1"
-FILE="$2"
-
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/beautify.js ${DATAROOTDIR}/beautify-cl.js "$OPTIONS_OR_FILE" "$FILE"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/beautify.js ${DATAROOTDIR}/beautify-cl.js "$@"

@@ -13,11 +13,11 @@ System requirements: java and curl.
 
 Beautify the javascript file `myscript.js` with an indent level of three spaces:
 
-    $ jsbeautify jslint_happy=true,indent_size=3 myscript.js
+    $ jsbeautify -o jslint_happy=true,indent_size=3 myscript.js
 
 and then lint it:
 
-    $ jshint white=true,indent=3,browser=true myscript.js
+    $ jshint -o white=true,indent=3,browser=true myscript.js
 
 
 Review and upgrade any improvements to e.g. jshint:
@@ -29,13 +29,13 @@ Review and upgrade any improvements to e.g. jshint:
 ###Usage
 
     $ jslint --help
-    usage: jslint [opt1=val1,opt2=val2...] FILE
+    usage: jslint [-o opt1=val1,opt2=val2...] [FILE]
  
     $ jshint --help
-    usage: jshint [opt1=val1,opt2=val2...] FILE
+    usage: jshint [-o opt1=val1,opt2=val2...] [FILE]
  
     $ jsbeautify --help
-    usage: jsbeautify [opt1=val1,opt2=val2...] FILE
+    usage: jsbeautify [-o opt1=val1,opt2=val2...] [FILE]
  
     $ jscorrectify --help
     usage: jscorrectify --diff     <jshint|jslint|jsbeautify>
@@ -58,14 +58,14 @@ A minimal `.vimrc` for javascript editing could look like:
        setlocal cinoptions+=J1
 
        "jshint
-       setlocal makeprg=jshint\ white=true,indent=3,browser=true\ %
+       setlocal makeprg=jshint\ -o\ white=true,indent=3,browser=true\ %
        setlocal errorformat=jshint:%f:%l:%c:%m
 
        "F5 runs jshint on this file, with errors shown in quickfix window
        nmap <buffer> <F5> :make<CR>
 
        "jsbeautify
-       setlocal equalprg=jsbeautify\ jslint_happy=true,indent_size=3\ %
+       setlocal equalprg=jsbeautify\ -o\ jslint_happy=true,indent_size=3
 
        "F10 runs jsbeautify on this file
        nmap <buffer> <F10> m`gg=G``
