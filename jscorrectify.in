@@ -37,14 +37,14 @@ fi
 
 if test "$2" = "jshint"; then
    URL="http://jshint.com"
-   URL="https://github.com/jshint/jshint/raw/master"
+   URL="https://raw.github.com/jshint/jshint/master"
    FILES="jshint.js"
 elif test "$2" = "jslint"; then
    URL="http://www.jslint.com"
-   URL="https://github.com/douglascrockford/JSLint/raw/master"
+   URL="https://raw.github.com/douglascrockford/JSLint/master"
    FILES="jslint.js"
 elif test "$2" = "jsbeautify"; then
-   URL="https://github.com/einars/js-beautify/raw/master"
+   URL="https://raw.github.com/einars/js-beautify/master"
    FILES="beautify.js"
 else
    echo "$NAME: invalid option: '$2'"
