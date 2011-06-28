@@ -16,9 +16,9 @@ NAME=`basename $0`
 
 if test "$1" = "--help" -o "$#" -ne 2; then
    # check if local and official remote scripts differ
-   echo "usage: $NAME --diff     <jshint|jslint|jsbeautify>"
+   echo "usage: $NAME --diff     <jshint|jslint|jsbeautify|cssbeautify>"
    # upgrade to newest remote scripts
-   echo "       $NAME --upgrade  <jshint|jslint|jsbeautify>"
+   echo "       $NAME --upgrade  <jshint|jslint|jsbeautify|cssbeautify>"
    echo "       $NAME --help"
    exit
 fi
@@ -46,6 +46,9 @@ elif test "$2" = "jslint"; then
 elif test "$2" = "jsbeautify"; then
    URL="https://raw.github.com/einars/js-beautify/master"
    FILES="beautify.js"
+elif test "$2" = "cssbeautify"; then
+   URL="https://raw.github.com/senchalabs/cssbeautify/master"
+   FILES="cssbeautify.js"
 else
    echo "$NAME: invalid option: '$2'"
    echo "Try '$NAME --help' for more information."

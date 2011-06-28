@@ -21,17 +21,19 @@ NAME=jscorrectify-1.0
 
 
 LINT_CL=lint-cl.js
-JSBEAUTIFY_CL=beautify-cl.js
+JSBEAUTIFY_CL=jsbeautify-cl.js
+CSSBEAUTIFY_CL=cssbeautify-cl.js
 
 JSHINT=jshint.js
 JSLINT=jslint.js
 JSBEAUTIFY=beautify.js
+CSSBEAUTIFY=cssbeautify.js
 RHINO=js.jar
-GENERATED=jshint jslint jsbeautify jscorrectify
+GENERATED=jshint jslint jsbeautify cssbeautify jscorrectify
 
 
 
-all: $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO)
+all: $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO)
 
 
 $(JSHINT): $(GENERATED)
@@ -42,6 +44,9 @@ $(JSLINT): $(GENERATED)
 
 $(JSBEAUTIFY): $(GENERATED)
 	@$(SHELL) ./jscorrectify --init jsbeautify
+
+$(CSSBEAUTIFY): $(GENERATED)
+	@$(SHELL) ./jscorrectify --init cssbeautify
 
 
 $(RHINO):
@@ -58,9 +63,9 @@ jsbeautify jscorrectify:
 
 
 
-install: all $(LINT_CL) $(JSBEAUTIFY_CL)
+install: all $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
 	mkdir -p $(DATAROOTDIR)
-	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(DATAROOTDIR)
+	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL) $(DATAROOTDIR)
 	mkdir -p $(BINDIR)
 	cp -f $(GENERATED) $(BINDIR)
 	cd $(BINDIR) && chmod +x $(GENERATED)
@@ -68,7 +73,7 @@ install: all $(LINT_CL) $(JSBEAUTIFY_CL)
 
 
 uninstall:
-	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL)
+	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
 	-rmdir $(DATAROOTDIR)
 	rm -f $(BINDIR)/jslint
 	rm -f $(BINDIR)/jsbeautify
@@ -78,20 +83,21 @@ uninstall:
 
 
 clean:
-	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(GENERATED)
+	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED)
 distclean:
-	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R2.zip $(NAME).tar.gz
+	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R2.zip $(NAME).tar.gz
 
 
 
 dist:
 	mkdir -p dist/$(NAME)
-	cp jsbeautify.in    dist/$(NAME)
-	cp jscorrectify.in  dist/$(NAME)
-	cp lint.in          dist/$(NAME)
-	cp $(LINT_CL)       dist/$(NAME)
-	cp $(JSBEAUTIFY_CL) dist/$(NAME)
-	cp Makefile         dist/$(NAME)
+	cp jsbeautify.in     dist/$(NAME)
+	cp jscorrectify.in   dist/$(NAME)
+	cp lint.in           dist/$(NAME)
+	cp $(LINT_CL)        dist/$(NAME)
+	cp $(JSBEAUTIFY_CL)  dist/$(NAME)
+	cp $(CSSBEAUTIFY_CL) dist/$(NAME)
+	cp Makefile          dist/$(NAME)
 	cd dist && tar zcvf ../$(NAME).tar.gz $(NAME)
 	rm -r dist
 
