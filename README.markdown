@@ -1,6 +1,6 @@
 # jscorrectify
 
-Makes the github HEAD of [jshint](http://github.com/jshint/jshint), [jslint](http://github.com/douglascrockford/JSLint), and [jsbeautify](http://github.com/einars/js-beautify) available as command-line commands.
+Makes the github HEAD of [jshint](http://github.com/jshint/jshint), [jslint](http://github.com/douglascrockford/JSLint), [jsbeautify](http://github.com/einars/js-beautify), and [cssbeautify](https://github.com/senchalabs/cssbeautify) available as command-line commands.
 
 Once installed, `jscorrectify` makes it easy to `--upgrade` to the current HEAD of the respective scripts and `--diff` any changes since the last upgrade.
 
@@ -36,10 +36,13 @@ Review and upgrade any improvements to e.g. jshint:
  
     $ jsbeautify --help
     usage: jsbeautify [-o opt1=val1,opt2=val2...] [FILE]
+
+    $ cssbeautify --help
+    usage: cssbeautify [-o opt1=val1,opt2=val2...] [FILE]
  
     $ jscorrectify --help
-    usage: jscorrectify --diff     <jshint|jslint|jsbeautify>
-           jscorrectify --upgrade  <jshint|jslint|jsbeautify>
+    usage: jscorrectify --diff     <jshint|jslint|jsbeautify|cssbeautify>
+           jscorrectify --upgrade  <jshint|jslint|jsbeautify|cssbeautify>
            jscorrectify --help
 
 ###Vim
@@ -48,6 +51,8 @@ A minimal `.vimrc` for javascript editing could look like:
     set nocompatible
     syntax on
     filetype plugin indent on
+
+    " JS
     autocmd FileType javascript call JavascriptFileType()
 
     function JavascriptFileType()
@@ -71,4 +76,12 @@ A minimal `.vimrc` for javascript editing could look like:
        nmap <buffer> <F10> m`gg=G``
     endfunction
 
-With this `F10` beautifies the javascript file and `F5` lints it.
+
+    " CSS
+    autocmd FileType css call CSSFileType()
+
+    function! CSSFileType()
+       setlocal equalprg=cssbeautify
+    endfunction
+
+With this `F10` beautifies javascript and css files and `F5` lints javascript files.

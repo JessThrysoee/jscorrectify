@@ -1,9 +1,10 @@
 /*!
- * jscorrectify - jshint[1], jslint[2], and jsbeautifier[3] command-line interfaces.
+ * jscorrectify - jshint[1], jslint[2], jsbeautifier[3], and cssbeautify[4] command-line interfaces.
  *
  * [1]: http://jshint.com
  * [2]: http://jslint.com
  * [3]: http://jsbeautifier.org
+ * [4]: https://github.com/senchalabs/cssbeautify
  *
  * Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -12,7 +13,7 @@
  * Douglas Crockford's rhino.js
  */
 
-/*jslint rhino:true */
+/*jshint rhino:true */
 
 (function (global, args) {
    var lint, file, input, optstr, opts = {};
