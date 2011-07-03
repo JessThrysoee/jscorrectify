@@ -55,7 +55,7 @@
                return true;
             } else if (ov === 'false') {
                return false;
-            } else if (!isNaN(ov - 0)) {
+            } else if (!isNaN(parseInt(ov))) {
                return +ov; // Number
             } else {
                return ov;
@@ -75,7 +75,6 @@
       quit(1);
    }
 
-   //print(cssbeautify(input, opts));
-   print(cssbeautify(input));
+   print(cssbeautify(input, opts));
 
 }(arguments));

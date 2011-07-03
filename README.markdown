@@ -81,7 +81,7 @@ A minimal `.vimrc` for javascript editing could look like:
     autocmd FileType css call CSSFileType()
 
     function! CSSFileType()
-       setlocal equalprg=cssbeautify
+       setlocal equalprg=cssbeautify\ -o\ indent='\ \ \ '
     endfunction
 
 With this `F10` beautifies javascript and css files and `F5` lints javascript files.
