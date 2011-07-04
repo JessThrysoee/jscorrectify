@@ -85,3 +85,12 @@ A minimal `.vimrc` for javascript editing could look like:
     endfunction
 
 With this `F10` beautifies javascript and css files and `F5` lints javascript files.
+
+While you are messing with your vim setup, have a look at:
+
+* [doctorjs](https://github.com/mozilla/doctorjs)
+* [tagbar](https://github.com/majutsushi/tagbar)
+* [command-t](https://wincent.com/products/command-t)
+
+With these nothing can stop you from coding the next big javascript library.
+
