@@ -13,7 +13,8 @@
  * Douglas Crockford's rhino.js
  */
 
-/*jshint rhino:true */
+/*global java, importPackage, BufferedReader, InputStreamReader, System */
+/*jslint rhino:true */
 
 (function (global, args) {
    var lint, file, input, optstr, opts = {};
@@ -57,6 +58,10 @@
       return input;
    }
 
+   function isNumber(exp) {
+      return !isNaN(+exp);
+   }
+
    if (optstr) {
       optstr.split(',').forEach(function (arg) {
          var o = arg.split('=');
@@ -65,8 +70,8 @@
                return true;
             } else if (ov === 'false') {
                return false;
-            } else if (!isNaN(parseInt(ov))) {
-               return +ov; // Number
+            } else if (isNumber(ov)) {
+               return +ov;
             } else {
                return ov;
             }
