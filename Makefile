@@ -38,16 +38,16 @@ all: $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO)
 
 
 $(JSHINT): $(GENERATED)
-	@$(SHELL) ./jscorrectify --init jshint
+	@$(SHELL) ./jscorrectify init jshint
 
 $(JSLINT): $(GENERATED)
-	@$(SHELL) ./jscorrectify --init jslint
+	@$(SHELL) ./jscorrectify init jslint
 
 $(JSBEAUTIFY): $(GENERATED)
-	@$(SHELL) ./jscorrectify --init jsbeautify
+	@$(SHELL) ./jscorrectify init jsbeautify
 
 $(CSSBEAUTIFY): $(GENERATED)
-	@$(SHELL) ./jscorrectify --init cssbeautify
+	@$(SHELL) ./jscorrectify init cssbeautify
 
 
 $(RHINO):

@@ -2,7 +2,7 @@
 
 Makes the github HEAD of [jshint](http://github.com/jshint/jshint), [jslint](http://github.com/douglascrockford/JSLint), [jsbeautify](http://github.com/einars/js-beautify), and [cssbeautify](https://github.com/senchalabs/cssbeautify) available as command-line commands.
 
-Once installed, `jscorrectify` makes it easy to `--upgrade` to the current HEAD of the respective scripts and `--diff` any changes since the last upgrade.
+Once installed, `jscorrectify` makes it easy to `upgrade` to the current HEAD of the respective scripts and `diff` any changes since the last upgrade.
 
 Lint errors are compatible with [vim](http://www.vim.org)'s errorformat, so they can be shown and navigated in a quickfix window.
 
@@ -22,28 +22,29 @@ and then lint it:
 
 Review and upgrade any improvements to e.g. jshint:
 
-    $ jscorrectify --diff jshint
-    $ jscorrectify --upgrade jshint
+    $ jscorrectify diff jshint
+    $ jscorrectify upgrade jshint
     
 
 ###Usage
 
-    $ jslint --help
+    $ jslint help
     usage: jslint [-o opt1=val1,opt2=val2...] [FILE]
  
-    $ jshint --help
+    $ jshint help
     usage: jshint [-o opt1=val1,opt2=val2...] [FILE]
  
-    $ jsbeautify --help
+    $ jsbeautify help
     usage: jsbeautify [-o opt1=val1,opt2=val2...] [FILE]
 
-    $ cssbeautify --help
+    $ cssbeautify help
     usage: cssbeautify [-o opt1=val1,opt2=val2...] [FILE]
  
-    $ jscorrectify --help
-    usage: jscorrectify --diff     <jshint|jslint|jsbeautify|cssbeautify>
-           jscorrectify --upgrade  <jshint|jslint|jsbeautify|cssbeautify>
-           jscorrectify --help
+    $ jscorrectify help
+    usage: jscorrectify diff     <jshint|jslint|jsbeautify|cssbeautify>
+           jscorrectify upgrade  <jshint|jslint|jsbeautify|cssbeautify>
+           jscorrectify outdated
+           jscorrectify help
 
 ###Vim
 A minimal `.vimrc` for javascript editing could look like:

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/local/bin/dash
 #
 # jscorrectify - jshint[1], jslint[2], jsbeautifier[3], and cssbeautify[4] command-line interfaces.
 #
@@ -15,77 +15,106 @@ DATAROOTDIR=@datarootdir@
 
 NAME=`basename $0`
 
-if test "$1" = "--help" -o "$#" -ne 2; then
-   # check if local and official remote scripts differ
-   echo "usage: $NAME --diff     <jshint|jslint|jsbeautify|cssbeautify>"
+JSHINT_URL="https://raw.github.com/jshint/jshint/master/jshint.js"
+JSLINT_URL="https://raw.github.com/douglascrockford/JSLint/master/jslint.js"
+JSBEAUTIFY_URL="https://raw.github.com/einars/js-beautify/master/beautify.js"
+CSSBEAUTIFY_URL="https://raw.github.com/senchalabs/cssbeautify/master/cssbeautify.js"
+
+CMD="$1"
+
+# usage
+if test -z "$CMD" -o "$CMD" = "help"; then
+   # view diff between local and official remote script
+   echo "usage: $NAME diff     <jshint|jslint|jsbeautify|cssbeautify>"
    # upgrade to newest remote scripts
-   echo "       $NAME --upgrade  <jshint|jslint|jsbeautify|cssbeautify>"
-   echo "       $NAME --help"
-   exit
+   echo "       $NAME upgrade  <jshint|jslint|jsbeautify|cssbeautify>"
+   # check if any of the local scripts are outdated
+   echo "       $NAME outdated"
+   echo "       $NAME help"
+   exit 0
 fi
 
-if test "$1" = "--diff"; then
-   OPT="DIFF"
-elif test "$1" = "--upgrade"; then
-   OPT="UPGRADE"
-elif test "$1" = "--init"; then
-   OPT="INIT"
-else
-   echo "$NAME: invalid option: '$1'"
-   echo "Try '$NAME --help' for more information."
+if test "$CMD" != "diff" -a "$CMD" != "upgrade" -a "$CMD" != "outdated" -a "$CMD" != "init"; then
+   echo "$NAME: invalid command: '$CMD'"
+   echo "Try '$NAME help' for more information."
    exit 1
 fi
 
+# arguments
 if test "$2" = "jshint"; then
-   URL="http://jshint.com"
-   URL="https://raw.github.com/jshint/jshint/master"
-   FILES="jshint.js"
+   URLS=$JSHINT_URL
 elif test "$2" = "jslint"; then
-   URL="http://www.jslint.com"
-   URL="https://raw.github.com/douglascrockford/JSLint/master"
-   FILES="jslint.js"
+   URLS=$JSLINT_URL
 elif test "$2" = "jsbeautify"; then
-   URL="https://raw.github.com/einars/js-beautify/master"
-   FILES="beautify.js"
+   URLS=$JSBEAUTIFY_URL
 elif test "$2" = "cssbeautify"; then
-   URL="https://raw.github.com/senchalabs/cssbeautify/master"
-   FILES="cssbeautify.js"
+   URLS=$CSSBEAUTIFY_URL
+elif test "$CMD" = "outdated"; then
+   URLS="$JSHINT_URL $JSLINT_URL $JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
 else
    echo "$NAME: invalid option: '$2'"
-   echo "Try '$NAME --help' for more information."
+   echo "Try '$NAME help' for more information."
    exit 1
 fi
 
-
-if test "$OPT" = "INIT"; then
+# workdir
+if test "$CMD" = "init"; then
    TMPDIR=.
 else
    TMPDIR=`mktemp -d -t ${NAME}.XXXX`
+   if test -z "$TMPDIR"; then
+      echo "$NAME: failed to create workdir -- exiting"
+      exit 1
+   fi
    cd $TMPDIR
    trap 'cd /; rm -rf $TMPDIR' 1 2 13 15 0
 fi
 
-for js in $FILES; do
-   curl -s -o "${TMPDIR}/$js" "${URL}/$js"
+# download
+for url in $URLS; do
+   curl -s -o "${TMPDIR}/`basename $url`" "$url"
    if test $? -ne 0; then
-      echo "$NAME: Failed to 'curl ${URL}/$js' -- exiting"
+      echo "$NAME: Failed to 'curl $url' -- exiting"
       exit 1
    fi
 done
 
-
-if test "$OPT" = "INIT"; then
-   exit 0
-elif test "$OPT" = "DIFF"; then
-   for js in $FILES; do
-      diff -Naur "${DATAROOTDIR}/$js" "$TMPDIR"
-   done
-elif test "$OPT" = "UPGRADE"; then
-   for js in $FILES; do
-      cp -f "$TMPDIR/$js" ${DATAROOTDIR}
-   done
-else
-   echo "$NAME: OPT: $OPT -- exiting"
-   exit 1
-fi
+# main
+case "$CMD" in
+   "init")
+      exit 0;;
+   "diff")
+      for url in $URLS; do
+         diff -Naur "${DATAROOTDIR}/`basename $url`" "$TMPDIR"
+      done
+      ;;
+   "outdated")
+      for url in $URLS; do
+         diff -Naurq "${DATAROOTDIR}/`basename $url`" "$TMPDIR" >/dev/null 2>&1
+         if test $? -ne 0; then
+            case "$url" in
+               $JSHINT_URL)
+                  echo "jshint";;
+               $JSLINT_URL)
+                  echo "jslint";;
+               $JSBEAUTIFY_URL)
+                  echo "jsbeautify";;
+               $CSSBEAUTIFY_URL)
+                  echo "cssbeautify";;
+               *)
+                  echo "$NAME: outdated error' -- exiting";;
+            esac
+         fi
+      done
+      ;;
+   "upgrade")
+      for url in $URLS; do
+         cp -f "$TMPDIR/`basename $url`" ${DATAROOTDIR}
+      done
+      ;;
+   *)
+      echo "$NAME: unknown command: $CMD -- exiting"
+      exit 1
+      ;;
+esac
 
