@@ -59,7 +59,7 @@
    }
 
    function isNumber(exp) {
-      return !isNaN(+exp);
+      return !isNaN(parseInt(exp));
    }
 
    if (optstr) {
