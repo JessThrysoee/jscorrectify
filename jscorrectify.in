@@ -1,4 +1,4 @@
-#!/usr/local/bin/dash
+#!/bin/sh
 #
 # jscorrectify - jshint[1], jslint[2], jsbeautifier[3], and cssbeautify[4] command-line interfaces.
 #
