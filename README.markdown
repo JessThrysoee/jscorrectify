@@ -85,6 +85,16 @@ A minimal `.vimrc` for javascript editing could look like:
        setlocal equalprg=cssbeautify\ -o\ indent='\ \ \ '
     endfunction
 
+
+    " reload chrome tab
+    function! TellChromeReloadActiveTab()
+       silent !osascript -e 'tell application id "com.google.Chrome" to reload active tab of window 1' &
+       redraw!
+    endfunction
+
+    nmap <F2> m`:call TellChromeReloadActiveTab()<CR>``
+
+
 With this `F10` beautifies javascript and css files and `F5` lints javascript files.
 
 While you are messing with your vim setup, have a look at:
@@ -94,4 +104,3 @@ While you are messing with your vim setup, have a look at:
 * [command-t](https://wincent.com/products/command-t)
 
 With these nothing can stop you from coding the next big javascript library.
-
