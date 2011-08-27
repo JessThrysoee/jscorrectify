@@ -11,7 +11,7 @@
 # Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 #
 
-PREFIX=/usr/local
+PREFIX=/usr/local2
 # install dir for executables (should be on PATH)
 BINDIR=$(PREFIX)/bin
 # install dir for *.js
@@ -51,8 +51,8 @@ $(CSSBEAUTIFY): $(GENERATED)
 
 
 $(RHINO):
-	curl -O ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino1_7R2.zip
-	unzip -jo rhino1_7R2.zip rhino1_7R2/js.jar
+	curl -O ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino1_7R3.zip
+	unzip -jo rhino1_7R3.zip rhino1_7R3/js.jar
 
 
 jshint:
@@ -86,7 +86,7 @@ uninstall:
 clean:
 	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED)
 distclean:
-	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R2.zip $(NAME).tar.gz
+	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R3.zip $(NAME).tar.gz
 
 
 
