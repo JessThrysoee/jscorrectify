@@ -13,11 +13,11 @@ System requirements: java and curl.
 
 Beautify the javascript file `myscript.js` with an indent level of three spaces:
 
-    $ jsbeautify -o jslint_happy=true,indent_size=3 myscript.js
+    $ jsbeautify -o indent_size=3 myscript.js
 
 and then lint it:
 
-    $ jshint -o white=true,indent=3,browser=true myscript.js
+    $ jshint -o indent=3,browser=true myscript.js
 
 
 Review and upgrade any improvements to e.g. jshint:
@@ -64,14 +64,14 @@ A minimal `.vimrc` for javascript editing could look like:
        setlocal cinoptions+=J1
 
        "jshint
-       setlocal makeprg=jshint\ -o\ white=true,indent=3,browser=true\ %
+       setlocal makeprg=jshint\ -o\ indent=3,browser=true\ %
        setlocal errorformat=jshint:%f:%l:%c:%m
 
        "F5 runs jshint on this file, with errors shown in quickfix window
        nmap <buffer> <F5> :make<CR>
 
        "jsbeautify
-       setlocal equalprg=jsbeautify\ -o\ jslint_happy=true,indent_size=3
+       setlocal equalprg=jsbeautify\ -o\ indent_size=3
 
        "F10 runs jsbeautify on this file
        nmap <buffer> <F10> m`gg=G``
