@@ -99,8 +99,8 @@ With this `F10` beautifies javascript and css files and `F5` lints javascript fi
 
 While you are messing with your vim setup, have a look at:
 
-* [doctorjs](https://github.com/mozilla/doctorjs)
+* [ctrl-p](https://github.com/kien/ctrlp.vim)
 * [tagbar](https://github.com/majutsushi/tagbar)
-* [command-t](https://wincent.com/products/command-t)
+* [doctorjs](https://github.com/mozilla/doctorjs)
 
 With these nothing can stop you from coding the next big javascript library.
