@@ -27,7 +27,7 @@ if test -z "$CMD" -o "$CMD" = "help"; then
    # view diff between local and official remote script
    echo "usage: $NAME diff     <jshint|jslint|jsbeautify|cssbeautify>"
    # upgrade to newest remote scripts
-   echo "       $NAME upgrade  <jshint|jslint|jsbeautify|cssbeautify>"
+   echo "       $NAME upgrade  <jshint|jslint|jsbeautify|cssbeautify|all>"
    # check if any of the local scripts are outdated
    echo "       $NAME outdated"
    echo "       $NAME help"
@@ -49,6 +49,8 @@ elif test "$2" = "jsbeautify"; then
    URLS=$JSBEAUTIFY_URL
 elif test "$2" = "cssbeautify"; then
    URLS=$CSSBEAUTIFY_URL
+elif test "$2" = "all"; then
+   URLS="$JSHINT_URL $JSLINT_URL $JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
 elif test "$CMD" = "outdated"; then
    URLS="$JSHINT_URL $JSLINT_URL $JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
 else
