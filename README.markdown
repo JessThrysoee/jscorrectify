@@ -42,7 +42,7 @@ Review and upgrade any improvements to e.g. jshint:
  
     $ jscorrectify help
     usage: jscorrectify diff     <jshint|jslint|jsbeautify|cssbeautify>
-           jscorrectify upgrade  <jshint|jslint|jsbeautify|cssbeautify>
+           jscorrectify upgrade  <jshint|jslint|jsbeautify|cssbeautify|all>
            jscorrectify outdated
            jscorrectify help
 
