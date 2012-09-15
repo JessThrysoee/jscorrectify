@@ -19,4 +19,4 @@ then
    exit
 fi
 
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/cssbeautify.js ${DATAROOTDIR}/cssbeautify-cl.js "$@"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/env.js -f ${DATAROOTDIR}/cssbeautify.js ${DATAROOTDIR}/cssbeautify-cl.js "$@"

@@ -30,6 +30,7 @@ JSLINT=jslint.js
 JSBEAUTIFY=beautify.js
 CSSBEAUTIFY=cssbeautify.js
 RHINO=js.jar
+ENV_JS=env.js
 GENERATED=jshint jslint jsbeautify cssbeautify jscorrectify
 
 
@@ -66,7 +67,7 @@ jsbeautify cssbeautify jscorrectify:
 
 install: all $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
 	mkdir -p $(DATAROOTDIR)
-	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL) $(DATAROOTDIR)
+	cp -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL) $(ENV_JS) $(DATAROOTDIR)
 	mkdir -p $(BINDIR)
 	cp -f $(GENERATED) $(BINDIR)
 	cd $(BINDIR) && chmod +x $(GENERATED)
@@ -74,7 +75,7 @@ install: all $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
 
 
 uninstall:
-	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
+	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL) $(ENV_JS)
 	-rmdir $(DATAROOTDIR)
 	rm -f $(BINDIR)/jslint
 	rm -f $(BINDIR)/jsbeautify
@@ -98,6 +99,7 @@ dist:
 	cp $(LINT_CL)        dist/$(NAME)
 	cp $(JSBEAUTIFY_CL)  dist/$(NAME)
 	cp $(CSSBEAUTIFY_CL) dist/$(NAME)
+	cp $(ENV_JS)         dist/$(NAME)
 	cp Makefile          dist/$(NAME)
 	cd dist && tar zcvf ../$(NAME).tar.gz $(NAME)
 	rm -r dist
