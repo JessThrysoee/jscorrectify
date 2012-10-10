@@ -11,7 +11,7 @@
 # Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
 #
 
-PREFIX=/usr/local2
+PREFIX=/usr/local
 # install dir for executables (should be on PATH)
 BINDIR=$(PREFIX)/bin
 # install dir for *.js
