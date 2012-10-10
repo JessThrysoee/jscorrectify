@@ -15,7 +15,7 @@ DATAROOTDIR=@datarootdir@
 
 NAME=`basename $0`
 
-JSHINT_URL="https://raw.github.com/jshint/jshint/master/jshint.js"
+JSHINT_URL="https://raw.github.com/jshint/jshint/master/src/stable/jshint.js"
 JSLINT_URL="https://raw.github.com/douglascrockford/JSLint/master/jslint.js"
 JSBEAUTIFY_URL="https://raw.github.com/einars/js-beautify/master/beautify.js"
 CSSBEAUTIFY_URL="https://raw.github.com/senchalabs/cssbeautify/master/cssbeautify.js"
