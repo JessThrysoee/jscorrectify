@@ -20,5 +20,5 @@ then
    exit
 fi
 
-java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/${LINT}.js ${DATAROOTDIR}/lint-cl.js "$LINT" "$@"
+java -cp ${DATAROOTDIR}/js.jar org.mozilla.javascript.tools.shell.Main -f ${DATAROOTDIR}/env.js -f ${DATAROOTDIR}/${LINT}.js ${DATAROOTDIR}/lint-cl.js "$LINT" "$@"
 

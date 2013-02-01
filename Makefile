@@ -20,7 +20,6 @@ DATAROOTDIR=$(PREFIX)/share/jscorrectify
 
 NAME=jscorrectify-1.0
 
-
 LINT_CL=lint-cl.js
 JSBEAUTIFY_CL=jsbeautify-cl.js
 CSSBEAUTIFY_CL=cssbeautify-cl.js
@@ -52,8 +51,8 @@ $(CSSBEAUTIFY): $(GENERATED)
 
 
 $(RHINO):
-	curl -O ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino1_7R3.zip
-	unzip -jo rhino1_7R3.zip rhino1_7R3/js.jar
+	curl -L -O https://github.com/downloads/mozilla/rhino/rhino1_7R4.zip
+	unzip -jo rhino1_7R4.zip rhino1_7R4/js.jar
 
 
 jshint:
@@ -77,6 +76,7 @@ install: all $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL)
 uninstall:
 	cd $(DATAROOTDIR) && rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(RHINO) $(LINT_CL) $(JSBEAUTIFY_CL) $(CSSBEAUTIFY_CL) $(ENV_JS)
 	-rmdir $(DATAROOTDIR)
+	rm -f $(BINDIR)/jshint
 	rm -f $(BINDIR)/jslint
 	rm -f $(BINDIR)/jsbeautify
 	rm -f $(BINDIR)/jscorrectify
@@ -87,7 +87,7 @@ uninstall:
 clean:
 	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED)
 distclean:
-	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R3.zip $(NAME).tar.gz
+	rm -f $(JSHINT) $(JSLINT) $(JSBEAUTIFY) $(CSSBEAUTIFY) $(GENERATED) $(RHINO) rhino1_7R4.zip $(NAME).tar.gz
 
 
 
