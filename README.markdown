@@ -4,8 +4,6 @@ Makes the github HEAD of [jsbeautify](http://github.com/einars/js-beautify) and 
 
 Once installed, `jscorrectify` makes it easy to `upgrade` to the current HEAD of the respective scripts and `diff` any changes since the last upgrade.
 
-Lint errors are compatible with [vim](http://www.vim.org)'s errorformat, so they can be shown and navigated in a quickfix window.
-
 
 System requirements: java and curl.
 
