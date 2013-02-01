@@ -1,11 +1,9 @@
 #!/bin/sh
 #
-# jscorrectify - jshint[1], jslint[2], jsbeautifier[3], and cssbeautify[4] command-line interfaces.
+# jscorrectify - jsbeautifier[1], and cssbeautify[2] command-line interfaces.
 #
-# [1]: http://jshint.com
-# [2]: http://jslint.com
-# [3]: http://jsbeautifier.org
-# [4]: https://github.com/senchalabs/cssbeautify
+# [1]: http://jsbeautifier.org
+# [2]: https://github.com/senchalabs/cssbeautify
 # 
 # Copyright (c) 2010 Jess Thrysoee (jess@thrysoee.dk)
 # Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
@@ -15,8 +13,6 @@ DATAROOTDIR=@datarootdir@
 
 NAME=`basename $0`
 
-JSHINT_URL="https://raw.github.com/jshint/jshint/master/src/stable/jshint.js"
-JSLINT_URL="https://raw.github.com/douglascrockford/JSLint/master/jslint.js"
 JSBEAUTIFY_URL="https://raw.github.com/einars/js-beautify/master/beautify.js"
 CSSBEAUTIFY_URL="https://raw.github.com/senchalabs/cssbeautify/master/cssbeautify.js"
 
@@ -25,9 +21,9 @@ CMD="$1"
 # usage
 if test -z "$CMD" -o "$CMD" = "help"; then
    # view diff between local and official remote script
-   echo "usage: $NAME diff     <jshint|jslint|jsbeautify|cssbeautify>"
+   echo "usage: $NAME diff     <jsbeautify|cssbeautify>"
    # upgrade to newest remote scripts
-   echo "       $NAME upgrade  <jshint|jslint|jsbeautify|cssbeautify|all>"
+   echo "       $NAME upgrade  <jsbeautify|cssbeautify|all>"
    # check if any of the local scripts are outdated
    echo "       $NAME outdated"
    echo "       $NAME help"
@@ -41,18 +37,14 @@ if test "$CMD" != "diff" -a "$CMD" != "upgrade" -a "$CMD" != "outdated" -a "$CMD
 fi
 
 # arguments
-if test "$2" = "jshint"; then
-   URLS=$JSHINT_URL
-elif test "$2" = "jslint"; then
-   URLS=$JSLINT_URL
-elif test "$2" = "jsbeautify"; then
+if test "$2" = "jsbeautify"; then
    URLS=$JSBEAUTIFY_URL
 elif test "$2" = "cssbeautify"; then
    URLS=$CSSBEAUTIFY_URL
 elif test "$2" = "all"; then
-   URLS="$JSHINT_URL $JSLINT_URL $JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
+   URLS="$JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
 elif test "$CMD" = "outdated"; then
-   URLS="$JSHINT_URL $JSLINT_URL $JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
+   URLS="$JSBEAUTIFY_URL $CSSBEAUTIFY_URL"
 else
    echo "$NAME: invalid option: '$2'"
    echo "Try '$NAME help' for more information."
@@ -95,10 +87,6 @@ case "$CMD" in
          diff -Naurq "${DATAROOTDIR}/`basename $url`" "$TMPDIR" >/dev/null 2>&1
          if test $? -ne 0; then
             case "$url" in
-               $JSHINT_URL)
-                  echo "jshint";;
-               $JSLINT_URL)
-                  echo "jslint";;
                $JSBEAUTIFY_URL)
                   echo "jsbeautify";;
                $CSSBEAUTIFY_URL)

@@ -5,7 +5,7 @@
 */
 
 /*global cssbeautify, java, importPackage, BufferedReader, InputStreamReader, System */
-/*jslint rhino:true */
+/*jshint rhino:true */
 
 (function (args) {
    var file, input, optstr, opts = {};

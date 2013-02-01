@@ -1,6 +1,6 @@
 # jscorrectify
 
-Makes the github HEAD of [jshint](http://github.com/jshint/jshint), [jslint](http://github.com/douglascrockford/JSLint), [jsbeautify](http://github.com/einars/js-beautify), and [cssbeautify](https://github.com/senchalabs/cssbeautify) available as command-line commands.
+Makes the github HEAD of [jsbeautify](http://github.com/einars/js-beautify) and [cssbeautify](https://github.com/senchalabs/cssbeautify) available as command-line commands.
 
 Once installed, `jscorrectify` makes it easy to `upgrade` to the current HEAD of the respective scripts and `diff` any changes since the last upgrade.
 
@@ -15,25 +15,19 @@ Beautify the javascript file `myscript.js` with an indent level of three spaces:
 
     $ jsbeautify -o indent_size=3 myscript.js
 
-and then lint it:
+or beautify a CSS file:
 
-    $ jshint -o indent=3,browser=true myscript.js
+    $ cssbeautify -o indent='   ' mystyle.css
 
 
-Review and upgrade any improvements to e.g. jshint:
+Review and upgrade any improvements to e.g. jsbeautify:
 
-    $ jscorrectify diff jshint
-    $ jscorrectify upgrade jshint
+    $ jscorrectify diff jsbeautify
+    $ jscorrectify upgrade jsbeautify
     
 
 ###Usage
 
-    $ jslint help
-    usage: jslint [-o opt1=val1,opt2=val2...] [FILE]
- 
-    $ jshint help
-    usage: jshint [-o opt1=val1,opt2=val2...] [FILE]
- 
     $ jsbeautify help
     usage: jsbeautify [-o opt1=val1,opt2=val2...] [FILE]
 
@@ -41,8 +35,8 @@ Review and upgrade any improvements to e.g. jshint:
     usage: cssbeautify [-o opt1=val1,opt2=val2...] [FILE]
  
     $ jscorrectify help
-    usage: jscorrectify diff     <jshint|jslint|jsbeautify|cssbeautify>
-           jscorrectify upgrade  <jshint|jslint|jsbeautify|cssbeautify|all>
+    usage: jscorrectify diff     <jsbeautify|cssbeautify>
+           jscorrectify upgrade  <jsbeautify|cssbeautify|all>
            jscorrectify outdated
            jscorrectify help
 
@@ -64,8 +58,8 @@ A minimal `.vimrc` for javascript editing could look like:
        setlocal cinoptions+=J1
 
        "jshint
-       setlocal makeprg=jshint\ -o\ indent=3,browser=true\ %
-       setlocal errorformat=jshint:%f:%l:%c:%m
+       setlocal makeprg=jshint\ --verbose\ --show-non-errors\ %
+       setlocal efm=%f:\ line\ %l\\,\ col\ %c\\,\ %m
 
        "F5 runs jshint on this file, with errors shown in quickfix window
        nmap <buffer> <F5> :make<CR>
